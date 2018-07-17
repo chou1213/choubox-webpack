@@ -1,0 +1,49 @@
+/* *
+ * vue 动画库
+ */
+// 变小
+.scale-to-small-enter-active{
+    transform: scale(1);
+    opacity: 1;
+    transition: all .4s ease;
+}
+.scale-to-small-enter{
+    transform: scale(1.5);
+    opacity: 0;
+}
+.scale-to-small-leave-active,
+.scale-to-small-leave{
+    opacity: 0;
+    transition: all .2s linear;
+}
+
+// 变大
+.scale-to-big-enter-active{
+    transform: scale(1);
+    opacity: 1;
+    transition: all .3s ease;
+}
+.scale-to-big-enter{
+    transform: scale(0);
+    opacity: 0;
+}
+.scale-to-big-leave-active,
+.scale-to-big-leave{
+    opacity: 0;
+    transition: all .2s linear;
+}
+
+// 渐变
+.fade-enter-active{
+    opacity: 1;
+    transition: all .2s linear;
+}
+.fade-enter-enter{
+    opacity: 0;
+    transition: all .2s linear;
+}
+.fade-leave-active,
+.fade-leave{
+    opacity: 0;
+    transition: all .2s linear;
+}

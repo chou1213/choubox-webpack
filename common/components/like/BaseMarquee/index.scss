@@ -1,0 +1,68 @@
+.ani-marquee{
+    position: relative;
+    overflow: hidden;
+    height: 60px;
+    p{
+        white-space: nowrap;
+        position: absolute;
+        left: 0;
+        padding-right: 80Px;
+        line-height: 55px;
+        text-align: center;
+        box-sizing: border-box;
+        font-size: 28px;
+        span{
+            margin-right: 30Px;
+        }
+        &:nth-child(2){
+            display: none;
+        }
+        &.active{
+            text-align: left;
+            width: auto;
+            animation: marquee-2 20s linear infinite 2s;
+            opacity: 1;
+            &:nth-child(2){
+                display: block;
+                opacity: 0;
+                animation: marquee-1 20s linear infinite 2s;
+            }
+        }
+    }
+}
+
+@keyframes marquee-1{
+    0% {
+        transform: translateX(100%);
+        opacity: 1
+    }
+    50% {
+        transform: translateX(0%);
+        opacity: 1
+    }
+    50.1% {
+        transform: translateX(0%);
+        opacity: 1
+    }
+    100% {
+        transform: translateX(-100%);
+        opacity: 1
+    }
+}
+
+
+@keyframes marquee-2{
+    0% {
+        transform: translateX(0%);
+    }
+    50% {
+        transform: translateX(-100%);
+    }
+    50.1% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+

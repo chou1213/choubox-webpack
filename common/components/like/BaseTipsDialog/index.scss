@@ -1,0 +1,32 @@
+$content_pl: 30rem / 75;
+$content_pt: 30rem / 75;
+$tips_ft: 32rem / 75;
+$tips_lh: 42rem / 75;
+
+.tips-dialog {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tips-dialog {
+    .tips-content {
+        box-sizing: border-box;
+        padding: $content_pt $content_pl;
+        font-size: $tips_ft;
+        line-height: $tips_lh;
+        background: rgba(0, 0, 0, .8);
+        color: #fff;
+        text-align: center;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+}

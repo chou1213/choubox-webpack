@@ -1,0 +1,32 @@
+.modal-mask{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-dialog{
+    background: #fff;
+    width: 70%;
+}
+.modal-title{
+    position: relative;
+}
+.modal-close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    .icon-close{
+        font-size: 32px;
+    }
+}
+.modal-content{
+    >div{
+        margin-bottom: 27px;
+    }
+}

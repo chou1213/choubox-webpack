@@ -162,11 +162,13 @@ module.exports = env => {
             alias: {
                 "vue": 'vue/dist/vue.js',
                 'COMMON': path.resolve(paths.root, './common'),
+                'XHR': path.resolve(paths.root, './common', 'XHR'), // TODO
                 'ASSETS': path.resolve(paths.root, './common', 'assets'),
                 'COMPONENTS': path.resolve(paths.root, './COMMON', 'components'),
                 'STATIC': path.resolve(paths.root, './static'),
                 '@': paths.srcPath,
                 '@assets': path.resolve(paths.srcPath, './assets'),
+                '@services': path.resolve(paths.srcPath, './services'), //TODO
                 '@components': path.resolve(paths.srcPath, './components'),
                 '@views': path.resolve(paths.srcPath, './views'),
                 '@static': path.resolve(paths.srcPath, './static'),

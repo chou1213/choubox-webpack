@@ -2,9 +2,9 @@ const path = require('path');
 const HOST = 'https://bggray-mobile.like.video'; //代理域名
 
 module.exports = {
-    title: 'demo', // document.title
+    title: 'act-9071', // document.title
     output: {
-        path: path.resolve(process.cwd(), 'dist/demo2'), //输出路径, 默认dist目录下同名文件
+        path: '', //输出路径, 默认dist目录下同名文件
         publicPath: '' //打包静态资源的路径，默认./
     },
     build: {
@@ -13,9 +13,20 @@ module.exports = {
     },
     devServer: {
         proxy: {
+            '/activity_2018': {
+                target: HOST,
+                changeOrigin: true,
+                ws: true
+            },
+            '/app': {
+                target: HOST,
+                changeOrigin: true,
+                ws: true
+            },
             '/live': {
                 target: HOST,
-                changeOrigin: true
+                changeOrigin: true,
+                ws: true
             }
         }
     }
