@@ -87,7 +87,8 @@ module.exports = env => {
             proxy: projectConfig.devServer.proxy
         },
         module: {
-            rules: [{
+            rules: [
+                ...(project.useEslint ? [{
                     test: /\.js|vue$/,
                     use: {
                         loader: 'eslint-loader',
@@ -98,7 +99,7 @@ module.exports = env => {
                     enforce: 'pre', // 编译前检查
                     exclude: /node_modules/, // 不检测的文件
                     include: [paths.srcPath], // 要检查的目录
-                },
+                }] : []),
                 {
                     test: /\.css|scss$/,
                     use: [

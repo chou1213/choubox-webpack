@@ -1,3 +1,4 @@
 module.exports = {
-    filename: 'https'
+    filename: 'https',
+    useEslint: true
 }
