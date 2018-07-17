@@ -7,16 +7,20 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
+const ifaces = os.networkInterfaces();
 const project = require('./project.config');
 const projectConfig = require(`./src/${project.filename}/config`);
 const paths = {
-    root: path.resolve(__dirname),
-    srcPath: path.join(__dirname, 'src', project.filename),
-    distPath: projectConfig.output.path || path.join(__dirname, 'dist', project.filename)
+    root: path.resolve(__dirname), //脚本所在根目录
+    srcPath: path.join(__dirname, 'src', project.filename), //子项目开发目录
+    distPath: projectConfig.output.path || path.join(__dirname, 'dist', project.filename) //子项目打包目录
 };
 
 module.exports = env => {
-    console.log('NODE_ENV: ', env.NODE_ENV)
+    console.log('\033[32m NODE_ENV: ', env.NODE_ENV, '\033[0m'); //当前运行环境
+
+    //公共plugin
     const plugins = [
         new VueLoaderPlugin(),
         new CopyWebpackPlguin((fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
@@ -35,6 +39,19 @@ module.exports = env => {
             template: path.resolve(paths.srcPath, (env.NODE_ENV == 'production' && projectConfig.build.template) || 'index.html')
         })
     ];
+    //获取本地ip
+    const ip = (function() {
+        let _arr = [];
+        Object.keys(ifaces).forEach(function(dev) {
+            ifaces[dev].forEach(function(details) {
+                if (details.family === 'IPv4') {
+                    _arr.push(details.address);
+                }
+            });
+        })
+        return _arr;
+    })();
+
     return {
         mode: env.NODE_ENV,
         devtool: env.NODE_ENV == 'production' ? 'none' : 'inline-source-map',
@@ -63,7 +80,7 @@ module.exports = env => {
         devServer: {
             compress: true,
             contentBase: paths.distPath,
-            host: '0.0.0.0',
+            host: ip[0],
             // port: 8080,
             hot: true, //模块热加载
             open: false, //自动打开浏览器
