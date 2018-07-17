@@ -12,6 +12,6 @@ import App from '@/views/index.vue'
 //   });
 // }
 new Vue({
-    el: '#app',
+    el: "#app",
     components: { App }
 })

@@ -10,7 +10,7 @@ const fs = require('fs');
 const os = require('os');
 const ifaces = os.networkInterfaces();
 const project = require('./project.config');
-const projectConfig = require(`./src/${project.filename}/config`);
+const projectConfig = require(`./src/${project.filename}/config`); //子项目配置
 const paths = {
     root: path.resolve(__dirname), //脚本所在根目录
     srcPath: path.join(__dirname, 'src', project.filename), //子项目开发目录
@@ -19,7 +19,6 @@ const paths = {
 
 module.exports = env => {
     console.log('\033[32m NODE_ENV: ', env.NODE_ENV, '\033[0m'); //当前运行环境
-
     //公共plugin
     const plugins = [
         new VueLoaderPlugin(),
@@ -89,6 +88,18 @@ module.exports = env => {
         },
         module: {
             rules: [{
+                    test: /\.js|vue$/,
+                    use: {
+                        loader: 'eslint-loader',
+                        options: {
+                            formatter: require('eslint-friendly-formatter') // 默认的错误提示方式
+                        }
+                    },
+                    enforce: 'pre', // 编译前检查
+                    exclude: /node_modules/, // 不检测的文件
+                    include: [paths.srcPath], // 要检查的目录
+                },
+                {
                     test: /\.css|scss$/,
                     use: [
                         env.NODE_ENV == 'production' ? {
@@ -135,7 +146,6 @@ module.exports = env => {
                 }
             ]
         },
-
         plugins: env.NODE_ENV == 'production' ? [
             new CleanWebpackPlugin(paths.distPath), //传入数组,指定要删除的目录
             new UglifyJSPlugin(),
@@ -149,7 +159,7 @@ module.exports = env => {
         resolve: {
             extensions: ['.js', '.vue', '.json'],
             alias: {
-                'vue': 'vue/dist/vue.js',
+                "vue": 'vue/dist/vue.js',
                 'COMMON': path.resolve(paths.root, './common'),
                 'ASSETS': path.resolve(paths.root, './common', 'assets'),
                 'COMPONENTS': path.resolve(paths.root, './COMMON', 'components'),
