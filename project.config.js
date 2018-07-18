@@ -1,4 +1,4 @@
 module.exports = {
     filename: 'page-8282',
-    useEslint: true
+    useEslint: false
 }

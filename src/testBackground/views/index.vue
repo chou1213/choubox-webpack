@@ -34,25 +34,25 @@
 </style>
 
 <script>
-import img2 from '@assets/img/1.jpg';
-import Share from 'COMPONENTS/share.vue';
-var img1 = require('@assets/img/1.jpg');
+import img2 from "@assets/img/1.jpg";
+import Share from "COMPONENTS/share.vue";
+var img1 = require("@assets/img/1.jpg");
 console.log(img1);
 console.log(img2);
 export default {
-    data() {
-        return {
-            countryCode: 'ru'
-        };
-    },
-    components: {
-        Share
-    },
-    create() { },
-    methods: {
-        showMsg() {
-            alert('lalalalalala');
-        }
+  data() {
+    return {
+      countryCode: "ru"
+    };
+  },
+  components: {
+    Share
+  },
+  create() {},
+  methods: {
+    showMsg() {
+      alert("lalalalalala");
     }
+  }
 };
 </script>
