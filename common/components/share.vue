@@ -1,25 +1,25 @@
 <template>
-  <div>
-    <h1>{{title}}</h1>
-  </div>
+    <div>
+        <h1>{{title}}</h1>
+    </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-        title : 'share commponents'
+    data() {
+        return {
+            title: 'share commponents'
+        }
+    },
+    create() { },
+    methods: {
+
     }
-  },
-  create() {},
-  methods: {
-   
-  }
 };
 </script>
 
 <style>
-    h1{
-        color:springgreen;
-    }
+h1 {
+  color: springgreen;
+}
 </style>

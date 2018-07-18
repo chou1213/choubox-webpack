@@ -1,0 +1,15 @@
+$mainColor:#07DADD; // 主要颜色
+$secondColor: #EABE20; // 次要颜色
+$bgColor: #2d1776;
+@mixin bg-style($url) {
+    background: url($url) center center no-repeat;
+    background-size: contain;
+}
+
+@mixin font($fontSize, $color, $weight:normal) {
+    font: {
+        size: $fontSize + px;
+        weight: $weight;
+    }
+    color: $color;
+}
