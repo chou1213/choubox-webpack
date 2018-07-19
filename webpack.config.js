@@ -41,7 +41,7 @@ module.exports = env => {
         },
         output: Object.assign({
             path: projectConfig.output.path || paths.distPath,
-            filename: 'static/js/[name].js', //入口文件输出的文件名
+            filename: 'static/js/[name].[hash:7].js', //入口文件输出的文件名
             publicPath: ''
         }, env.NODE_ENV === 'production' ? {
             // chunkFilename: 'static/js/[name].js', //非入口文件输出的文件名
@@ -102,7 +102,7 @@ module.exports = env => {
                         paths.srcPath,
                         path.resolve(paths.root, 'common'),
                         path.resolve(paths.root, 'node_modules/webpack-dev-server/client'),
-                        path.resolve(paths.root, 'node_modules/bigoapi/bigoapi-promise.js')
+                        path.resolve(paths.root, 'node_modules/bigoapi/bigoapi-promise.js'),
                     ],
                     // exclude: /node_modules/, // 不检测的文件
                     use: {
