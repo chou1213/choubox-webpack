@@ -21,15 +21,24 @@ module.exports = env => {
     console.log(`\x1B[32m NODE_ENV: ${env.NODE_ENV} \x1B[39m`); //当前运行环境
 
     //获取本地ip
-    const ip = (function() {
+    const ip = (function () {
         let _arr = [];
-        Object.keys(ifaces).forEach(function(dev) {
-            ifaces[dev].forEach(function(details) {
-                if (details.family === 'IPv4') {
-                    _arr.push(details.address);
-                }
-            });
-        })
+        switch (os.platform()) {
+            case 'win32':
+                Object.keys(ifaces).forEach(function (dev) {
+                    ifaces[dev].forEach(function (details) {
+                        if (details.family === 'IPv4') {
+                            _arr.push(details.address);
+                        }
+                    });
+                })
+                break;
+            case 'darwin':
+                _arr.push(ifaces.en0[1].address);
+                break;
+            default:
+                _arr.push('localhost');
+        }
         return _arr;
     })();
 
@@ -51,7 +60,7 @@ module.exports = env => {
             compress: true,
             contentBase: paths.distPath,
             host: ip[0],
-            // port: 8080,
+            port: 8083,
             hot: true, //模块热加载
             open: false, //自动打开浏览器
             inline: true,
@@ -98,13 +107,14 @@ module.exports = env => {
                 },
                 {
                     test: /\.js$/,
+                    exclude: /node_modules/, // 不检测的文件
                     include: [
+                        // paths.root,
                         paths.srcPath,
                         path.resolve(paths.root, 'common'),
                         path.resolve(paths.root, 'node_modules/webpack-dev-server/client'),
                         path.resolve(paths.root, 'node_modules/bigoapi/bigoapi-promise.js'),
                     ],
-                    // exclude: /node_modules/, // 不检测的文件
                     use: {
                         loader: 'babel-loader'
                     }
@@ -154,9 +164,9 @@ module.exports = env => {
                     filename: 'static/css/[name].css'
                 })
             ] : [
-                new webpack.NamedModulesPlugin(),
-                new webpack.HotModuleReplacementPlugin()
-            ]),
+                    new webpack.NamedModulesPlugin(),
+                    new webpack.HotModuleReplacementPlugin()
+                ]),
             new VueLoaderPlugin(),
             new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
                 from: path.resolve(paths.srcPath, 'static'),
