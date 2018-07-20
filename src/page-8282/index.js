@@ -10,7 +10,7 @@ import Chart from '@components/chart';
 import TableList from '@components/tableList';
 import multiLang from 'multi-lang-js';
 import bgyJson from '@lang/bgyJson.js';
-// import 'ASSETS/like/js/like-sdk-mock'
+import 'ASSETS/like/js/like-sdk-mock'
 
 let util = new _LIKE_UTIL();
 window.bigolive = bigolive;
@@ -27,7 +27,11 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = window.curLang[to.meta.title];
     }
-    console.log(to);
+
+    // console.time('console');
+    // console.log(to);
+    // console.timeEnd('console');
+
     if (to.name === 'guidePage') {
         document.body.style.backgroundColor = '#2d1776';
 

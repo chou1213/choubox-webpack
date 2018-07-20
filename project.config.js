@@ -1,4 +1,4 @@
 module.exports = {
-    filename: 'testBackground',
+    filename: 'page-8282',
     useEslint: true
 }

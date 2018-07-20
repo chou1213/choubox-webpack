@@ -9,13 +9,15 @@
         <div class="bg2"></div>
         <div class="common1"></div>
         <div class="common2"></div>
-        <!-- <Share></Share> -->
+        <Share></Share>
     </div>
 </template>
 
 <style lang="scss">
 @import "~@assets/css/main.scss";
-
+img {
+  width: 400px;
+}
 .bg2 {
   width: pxToRem(200);
   height: pxToRem(100);
@@ -35,7 +37,7 @@
 
 <script>
 import img2 from '@assets/img/1.jpg';
-// import Share from 'COMPONENTS/share.vue';
+import Share from 'COMPONENTS/share.vue';
 var img1 = require('@assets/img/1.jpg');
 console.log(img1);
 console.log(img2);
@@ -46,7 +48,7 @@ export default {
         };
     },
     components: {
-        // Share
+        Share
     },
     create() { },
     methods: {

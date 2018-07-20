@@ -3,7 +3,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlguin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //抽离css(2选1)，可以异步加载css
+const ExtractTextPlugin = require("extract-text-webpack-plugin"); //抽离css(2选1)
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
@@ -21,12 +22,12 @@ module.exports = env => {
     console.log(`\x1B[32m NODE_ENV: ${env.NODE_ENV} \x1B[39m`); //当前运行环境
 
     //获取本地ip
-    const ip = (function () {
+    const ip = (function() {
         let _arr = [];
         switch (os.platform()) {
             case 'win32':
-                Object.keys(ifaces).forEach(function (dev) {
-                    ifaces[dev].forEach(function (details) {
+                Object.keys(ifaces).forEach(function(dev) {
+                    ifaces[dev].forEach(function(details) {
                         if (details.family === 'IPv4') {
                             _arr.push(details.address);
                         }
@@ -60,7 +61,7 @@ module.exports = env => {
             compress: true,
             contentBase: paths.distPath,
             host: ip[0],
-            port: 8083,
+            port: 8084,
             hot: true, //模块热加载
             open: false, //自动打开浏览器
             inline: true,
@@ -82,6 +83,36 @@ module.exports = env => {
                 }] : []),
                 {
                     test: /\.css|scss$/,
+                    // use: env.NODE_ENV === 'development' ? [{
+                    //             loader: 'vue-style-loader'
+                    //         }, {
+                    //             loader: 'css-loader',
+                    //             options: {
+                    //                 minimize: true
+                    //             }
+                    //         },
+                    //         {
+                    //             loader: "postcss-loader"
+                    //         },
+                    //         {
+                    //             loader: 'sass-loader'
+                    //         }
+                    //     ] : ExtractTextPlugin.extract({
+                    //         fallback: "vue-style-loader",
+                    //         use: [{
+                    //                 loader: 'css-loader',
+                    //                 options: {
+                    //                     minimize: true
+                    //                 }
+                    //             },
+                    //             {
+                    //                 loader: "postcss-loader"
+                    //             },
+                    //             {
+                    //                 loader: 'sass-loader'
+                    //             }
+                    //         ]
+                    //     })
                     use: [
                         env.NODE_ENV === 'production' ? {
                             loader: MiniCssExtractPlugin.loader,
@@ -90,11 +121,11 @@ module.exports = env => {
                                 // by default it use publicPath in webpackOptions.output
                                 publicPath: '../../'
                             }
-                        } : { loader: 'style-loader' },
+                        } : { loader: 'vue-style-loader' },
                         {
                             loader: 'css-loader',
                             options: {
-                                minimize: true //css压缩
+                                minimize: env.NODE_ENV === 'production' //css压缩
                             }
                         },
                         {
@@ -107,14 +138,8 @@ module.exports = env => {
                 },
                 {
                     test: /\.js$/,
-                    exclude: /node_modules/, // 不检测的文件
-                    include: [
-                        // paths.root,
-                        paths.srcPath,
-                        path.resolve(paths.root, 'common'),
-                        path.resolve(paths.root, 'node_modules/webpack-dev-server/client'),
-                        path.resolve(paths.root, 'node_modules/bigoapi/bigoapi-promise.js'),
-                    ],
+                    exclude: /node_modules(?![\\/].*bigoapi[\\/])/, // 不检测的文件
+
                     use: {
                         loader: 'babel-loader'
                     }
@@ -159,14 +184,14 @@ module.exports = env => {
         plugins: [
             ...(env.NODE_ENV === 'production' ? [
                 new CleanWebpackPlugin(paths.distPath), //传入数组,指定要删除的目录
-                new UglifyJSPlugin(),
                 new MiniCssExtractPlugin({
                     filename: 'static/css/[name].css'
                 })
+                // new ExtractTextPlugin('static/css/[name].css'),
             ] : [
-                    new webpack.NamedModulesPlugin(),
-                    new webpack.HotModuleReplacementPlugin()
-                ]),
+                new webpack.NamedModulesPlugin(),
+                new webpack.HotModuleReplacementPlugin()
+            ]),
             new VueLoaderPlugin(),
             new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
                 from: path.resolve(paths.srcPath, 'static'),
