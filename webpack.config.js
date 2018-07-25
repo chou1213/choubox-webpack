@@ -3,8 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlguin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //抽离css(2选1)，可以异步加载css
-const ExtractTextPlugin = require("extract-text-webpack-plugin"); //抽离css(2选1)
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //抽离css,可以异步加载css
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
@@ -18,16 +17,18 @@ const paths = {
     distPath: projectConfig.output.path || path.join(__dirname, 'dist', project.filename) //子项目打包目录
 };
 
+
+
 module.exports = env => {
     console.log(`\x1B[32m NODE_ENV: ${env.NODE_ENV} \x1B[39m`); //当前运行环境
 
     //获取本地ip
-    const ip = (function() {
+    const ip = (function () {
         let _arr = [];
         switch (os.platform()) {
             case 'win32':
-                Object.keys(ifaces).forEach(function(dev) {
-                    ifaces[dev].forEach(function(details) {
+                Object.keys(ifaces).forEach(function (dev) {
+                    ifaces[dev].forEach(function (details) {
                         if (details.family === 'IPv4') {
                             _arr.push(details.address);
                         }
@@ -83,36 +84,6 @@ module.exports = env => {
                 }] : []),
                 {
                     test: /\.css|scss$/,
-                    // use: env.NODE_ENV === 'development' ? [{
-                    //             loader: 'vue-style-loader'
-                    //         }, {
-                    //             loader: 'css-loader',
-                    //             options: {
-                    //                 minimize: true
-                    //             }
-                    //         },
-                    //         {
-                    //             loader: "postcss-loader"
-                    //         },
-                    //         {
-                    //             loader: 'sass-loader'
-                    //         }
-                    //     ] : ExtractTextPlugin.extract({
-                    //         fallback: "vue-style-loader",
-                    //         use: [{
-                    //                 loader: 'css-loader',
-                    //                 options: {
-                    //                     minimize: true
-                    //                 }
-                    //             },
-                    //             {
-                    //                 loader: "postcss-loader"
-                    //             },
-                    //             {
-                    //                 loader: 'sass-loader'
-                    //             }
-                    //         ]
-                    //     })
                     use: [
                         env.NODE_ENV === 'production' ? {
                             loader: MiniCssExtractPlugin.loader,
@@ -187,11 +158,10 @@ module.exports = env => {
                 new MiniCssExtractPlugin({
                     filename: 'static/css/[name].css'
                 })
-                // new ExtractTextPlugin('static/css/[name].css'),
             ] : [
-                new webpack.NamedModulesPlugin(),
-                new webpack.HotModuleReplacementPlugin()
-            ]),
+                    new webpack.NamedModulesPlugin(),
+                    new webpack.HotModuleReplacementPlugin()
+                ]),
             new VueLoaderPlugin(),
             new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
                 from: path.resolve(paths.srcPath, 'static'),

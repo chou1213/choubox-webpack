@@ -4,6 +4,7 @@
     "description": "",
     "main": "webpack.config.js",
     "scripts": {
+        "dev": "node ./script/start.js",
         "start": "webpack-dev-server --env.NODE_ENV=development",
         "build": "webpack --env.NODE_ENV=production"
     },
