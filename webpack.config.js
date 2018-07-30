@@ -18,17 +18,18 @@ const paths = {
 };
 
 
+console.log(process.argv);
 
 module.exports = env => {
     console.log(`\x1B[32m NODE_ENV: ${env.NODE_ENV} \x1B[39m`); //当前运行环境
 
     //获取本地ip
-    const ip = (function () {
+    const ip = (function() {
         let _arr = [];
         switch (os.platform()) {
             case 'win32':
-                Object.keys(ifaces).forEach(function (dev) {
-                    ifaces[dev].forEach(function (details) {
+                Object.keys(ifaces).forEach(function(dev) {
+                    ifaces[dev].forEach(function(details) {
                         if (details.family === 'IPv4') {
                             _arr.push(details.address);
                         }
@@ -159,9 +160,9 @@ module.exports = env => {
                     filename: 'static/css/[name].css'
                 })
             ] : [
-                    new webpack.NamedModulesPlugin(),
-                    new webpack.HotModuleReplacementPlugin()
-                ]),
+                new webpack.NamedModulesPlugin(),
+                new webpack.HotModuleReplacementPlugin()
+            ]),
             new VueLoaderPlugin(),
             new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
                 from: path.resolve(paths.srcPath, 'static'),
