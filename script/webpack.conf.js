@@ -22,7 +22,8 @@ module.exports = {
     mode: env,
     devtool: env === 'production' ? false : 'inline-source-map',
     entry: {
-        index: ['webpack-dev-server/client/index.js?http://localhost:8080', 'babel-polyfill', path.join(paths.srcPath, 'index.js')]
+        // index: ['webpack-dev-server/client/index.js?http://localhost:8080', 'babel-polyfill', path.join(paths.srcPath, 'index.js')]
+        index: ['babel-polyfill', path.join(paths.srcPath, 'index.js')]
     },
     output: Object.assign({
         path: projectConfig.output.path || paths.distPath,

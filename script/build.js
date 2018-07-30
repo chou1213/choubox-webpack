@@ -28,11 +28,7 @@ const ip = (function() {
 })();
 
 
-WebpackDevServer.addDevServerEntrypoints(webpackConfig, webpackConfig.devServer);
 
-const compiler = webpack(webpackConfig);
-
-const server = new WebpackDevServer(compiler, webpackConfig.devServer);
 
 
 
@@ -44,8 +40,12 @@ portfinder.getPortPromise()
         // `port` is guaranteed to be a free port
         // in this scope.
         //
-        // webpackConfig.entry.index.unshift('webpack-dev-server/client/index.js?http://localhost:' + port);
+        webpackConfig.entry.index.unshift('webpack-dev-server/client/index.js?http://localhost:' + port);
+        WebpackDevServer.addDevServerEntrypoints(webpackConfig, webpackConfig.devServer);
 
+        const compiler = webpack(webpackConfig);
+
+        const server = new WebpackDevServer(compiler, webpackConfig.devServer);
 
         server.listen(port, '0.0.0.0', (err) => {
             if (err) {
