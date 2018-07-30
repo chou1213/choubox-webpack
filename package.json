@@ -4,8 +4,8 @@
     "description": "",
     "main": "webpack.config.js",
     "scripts": {
-        "dev": "node ./script/start.js",
-        "start": "webpack-dev-server --env.NODE_ENV=development",
+        "dev": "node ./script/build.js",
+        "start": "NODE_ENV=development webpack-dev-server --env.NODE_ENV=development",
         "build": "webpack --env.NODE_ENV=production"
     },
     "keywords": [],
@@ -39,6 +39,7 @@
         "mini-css-extract-plugin": "^0.4.1",
         "multi-lang-js": "^1.2.9",
         "node-sass": "^4.9.2",
+        "portfinder": "^1.0.13",
         "postcss-import": "^11.1.0",
         "postcss-loader": "^2.1.5",
         "postcss-pxtorem": "^4.0.1",

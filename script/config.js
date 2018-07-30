@@ -207,7 +207,7 @@ module.exports = env => {
                     vendors: {
                         test: /[\\/]node_modules[\\/]/,
                         chunks: 'initial',
-                        name: 'vendors',
+                        name: 'vendors'
                     }
                 }
             },
