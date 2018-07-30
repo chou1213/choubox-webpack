@@ -17,17 +17,12 @@ const paths = {
 };
 const env = 'development';
 
-
-
-
-
-
 module.exports = {
-
+    context: projectConfig.srcPath,
     mode: env,
     devtool: env === 'production' ? false : 'inline-source-map',
     entry: {
-        index: ['babel-polyfill', path.join(paths.srcPath, 'index.js')]
+        index: ['webpack-dev-server/client/index.js?http://localhost:8080', 'babel-polyfill', path.join(paths.srcPath, 'index.js')]
     },
     output: Object.assign({
         path: projectConfig.output.path || paths.distPath,
@@ -44,7 +39,7 @@ module.exports = {
         host: 'localhost',
         // port: 8084,
         hot: true, //模块热加载
-        open: true, //自动打开浏览器
+        open: false, //自动打开浏览器
         inline: true,
         proxy: projectConfig.devServer.proxy //代理
     },
@@ -139,9 +134,9 @@ module.exports = {
                 filename: 'static/css/[name].css'
             })
         ] : [
-                new webpack.NamedModulesPlugin(),
-                new webpack.HotModuleReplacementPlugin()
-            ]),
+            new webpack.NamedModulesPlugin(),
+            new webpack.HotModuleReplacementPlugin()
+        ]),
         new VueLoaderPlugin(),
         new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
             from: path.resolve(paths.srcPath, 'static'),
@@ -196,4 +191,3 @@ module.exports = {
         }
     } : {}
 }
-

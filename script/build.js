@@ -1,4 +1,3 @@
-'use strict';
 const os = require('os');
 const ifaces = os.networkInterfaces();
 const webpack = require('webpack');
@@ -28,11 +27,14 @@ const ip = (function() {
     return _arr;
 })();
 
-console.log(process.argv);
+
+WebpackDevServer.addDevServerEntrypoints(webpackConfig, webpackConfig.devServer);
 
 const compiler = webpack(webpackConfig);
 
 const server = new WebpackDevServer(compiler, webpackConfig.devServer);
+
+
 
 portfinder.basePort = process.env.PORT || 8080;
 
@@ -42,12 +44,15 @@ portfinder.getPortPromise()
         // `port` is guaranteed to be a free port
         // in this scope.
         //
-        server.listen(port, ip[0], (err) => {
+        // webpackConfig.entry.index.unshift('webpack-dev-server/client/index.js?http://localhost:' + port);
+
+
+        server.listen(port, '0.0.0.0', (err) => {
             if (err) {
                 console.log(err);
                 return false;
             }
-            console.log(`\x1B[32m Starting server on http://${ip[0]}:` + port + '\x1B[39m');
+            console.log(`\x1B[32m Starting server on http://${ip[0]}:${port} \x1B[39m`);
         });
     })
     .catch((err) => {

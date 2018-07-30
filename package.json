@@ -1,67 +1,70 @@
-'use strict';
-const os = require('os');
-const ifaces = os.networkInterfaces();
-const webpack = require('webpack');
-const webpackConfig = require('./webpack.conf.js');
-const WebpackDevServer = require('webpack-dev-server');
-const portfinder = require('portfinder');
-
-//获取本地ip
-const ip = (function() {
-    let _arr = [];
-    switch (os.platform()) {
-        case 'win32':
-            Object.keys(ifaces).forEach(function(dev) {
-                ifaces[dev].forEach(function(details) {
-                    if (details.family === 'IPv4') {
-                        _arr.push(details.address);
-                    }
-                });
-            })
-            break;
-        case 'darwin':
-            _arr.push(ifaces.en0[1].address);
-            break;
-        default:
-            _arr.push('localhost');
-    }
-    return _arr;
-})();
-
-console.log(process.argv);
-
-const compiler = webpack(webpackConfig);
-
-const server = new WebpackDevServer(compiler, webpackConfig.devServer);
-
-portfinder.basePort = process.env.PORT || 8080;
-
-portfinder.getPortPromise()
-    .then((port) => {
-        //
-        // `port` is guaranteed to be a free port
-        // in this scope.
-        //
-        server.listen(port, ip[0], (err) => {
-            if (err) {
-                console.log(err);
-                return false;
-            }
-            console.log(`\x1B[32m Starting server on http://${ip[0]}:` + port + '\x1B[39m');
-        });
-    })
-    .catch((err) => {
-        //
-        // Could not get a free port, `err` contains the reason.
-        //
-        console.log(err);
-    });
-"dependencies": {
-    "babel-polyfill": "^6.26.0"
-},
-"browserslist": [
-    "> 1%",
-    "last 20 versions",
-    "not ie <= 8"
-]
+{
+    "name": "webpack-demo3",
+    "version": "1.0.0",
+    "description": "",
+    "main": "webpack.config.js",
+    "scripts": {
+        "test": "node ./script/start.js",
+        "dev": "node ./script/build.js",
+        "start": "webpack-dev-server --env.NODE_ENV=development",
+        "build": "webpack --env.NODE_ENV=production"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "autoprefixer": "^8.6.4",
+        "axios": "^0.18.0",
+        "babel-core": "^6.26.3",
+        "babel-eslint": "^8.2.6",
+        "babel-loader": "^7.1.5",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-stage-2": "^6.24.1",
+        "bigoapi": "^1.3.12",
+        "clean-webpack-plugin": "^0.1.19",
+        "copy-webpack-plugin": "^4.5.2",
+        "css-loader": "^0.28.11",
+        "eslint": "^5.1.0",
+        "eslint-config-standard": "^12.0.0-alpha.0",
+        "eslint-friendly-formatter": "^4.0.1",
+        "eslint-loader": "^2.0.0",
+        "eslint-plugin-import": "^2.13.0",
+        "eslint-plugin-node": "^6.0.1",
+        "eslint-plugin-promise": "^3.8.0",
+        "eslint-plugin-standard": "^3.1.0",
+        "eslint-plugin-vue": "^4.7.0",
+        "extract-text-webpack-plugin": "^4.0.0-beta.0",
+        "file-loader": "^1.1.11",
+        "html-webpack-plugin": "^3.2.0",
+        "marked": "^0.4.0",
+        "mini-css-extract-plugin": "^0.4.1",
+        "multi-lang-js": "^1.2.9",
+        "node-sass": "^4.9.2",
+        "portfinder": "^1.0.13",
+        "postcss-import": "^11.1.0",
+        "postcss-loader": "^2.1.5",
+        "postcss-pxtorem": "^4.0.1",
+        "postcss-url": "^7.3.2",
+        "sass-loader": "^7.0.3",
+        "style-loader": "^0.21.0",
+        "uglifyjs-webpack-plugin": "^1.2.7",
+        "url-loader": "^1.0.1",
+        "vue": "^2.5.16",
+        "vue-loader": "^15.2.4",
+        "vue-router": "^3.0.1",
+        "vue-style-loader": "^4.1.0",
+        "vue-template-compiler": "^2.5.16",
+        "webpack": "^4.14.0",
+        "webpack-cli": "^3.0.8",
+        "webpack-dev-server": "^3.1.5"
+    },
+    "dependencies": {
+        "babel-polyfill": "^6.26.0"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 20 versions",
+        "not ie <= 8"
+    ]
 }
