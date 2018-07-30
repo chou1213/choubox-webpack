@@ -1,72 +1,54 @@
-'use strict';
-const os = require('os');
-const ifaces = os.networkInterfaces();
 const webpack = require('webpack');
-const webpackConfig = require('./webpack.conf.js');
-const WebpackDevServer = require('webpack-dev-server');
-const portfinder = require('portfinder');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlguin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //抽离css,可以异步加载css
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path');
+const fs = require('fs');
 
-//获取本地ip
-const ip = (function() {
-    let _arr = [];
-    switch (os.platform()) {
-        case 'win32':
-            Object.keys(ifaces).forEach(function(dev) {
-                ifaces[dev].forEach(function(details) {
-                    if (details.family === 'IPv4') {
-                        _arr.push(details.address);
-                    }
-                });
-            })
-            break;
-        case 'darwin':
-            _arr.push(ifaces.en0[1].address);
-            break;
-        default:
-            _arr.push('localhost');
-    }
-    return _arr;
-})();
+const project = require('../project.config');
+const projectConfig = require(`../src/${project.filename}/config`); //子项目配置
+const paths = {
+    root: path.resolve(process.cwd()), //脚本所在根目录
+    srcPath: path.join(process.cwd(), 'src', project.filename), //子项目开发目录
+    distPath: projectConfig.output.path || path.join(process.cwd(), 'dist', project.filename) //子项目打包目录
+};
+const env = 'development';
 
-console.log(process.argv);
 
-const compiler = webpack(webpackConfig);
 
-const server = new WebpackDevServer(compiler, webpackConfig.devServer);
 
-portfinder.basePort = process.env.PORT || 8080;
 
-portfinder.getPortPromise()
-    .then((port) => {
-        //
-        // `port` is guaranteed to be a free port
-        // in this scope.
-        //
-        server.listen(port, ip[0], (err) => {
-            if (err) {
-                console.log(err);
-                return false;
-            }
-            console.log(`\x1B[32m Starting server on http://${ip[0]}:` + port + '\x1B[39m');
-        });
-    })
-    .catch((err) => {
-        //
-        // Could not get a free port, `err` contains the reason.
-        //
-        console.log(err);
-    });
-compress: true,
-    contentBase: paths.distPath,
-    // host: ip[0],
-    host: 'localhost',
-    // port: 8084,
-    hot: true, //模块热加载
-    open: false, //自动打开浏览器
-    inline: true,
-    proxy: projectConfig.devServer.proxy //代理
-},
-module: {
+
+module.exports = {
+
+    mode: env,
+    devtool: env === 'production' ? false : 'inline-source-map',
+    entry: {
+        index: ['babel-polyfill', path.join(paths.srcPath, 'index.js')]
+    },
+    output: Object.assign({
+        path: projectConfig.output.path || paths.distPath,
+        filename: 'static/js/[name].[hash:7].js', //入口文件输出的文件名
+        publicPath: ''
+    }, env === 'production' ? {
+        // chunkFilename: 'static/js/[name].js', //非入口文件输出的文件名
+        publicPath: projectConfig.output.publicPath
+    } : {}),
+    devServer: {
+        compress: true,
+        contentBase: paths.distPath,
+        // host: ip[0],
+        host: 'localhost',
+        // port: 8084,
+        hot: true, //模块热加载
+        open: true, //自动打开浏览器
+        inline: true,
+        proxy: projectConfig.devServer.proxy //代理
+    },
+    module: {
         rules: [
             ...(project.useEslint ? [{
                 test: /\.js|vue$/,
@@ -83,7 +65,7 @@ module: {
             {
                 test: /\.css|scss$/,
                 use: [
-                    env.NODE_ENV === 'production' ? {
+                    env === 'production' ? {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
                             // you can specify a publicPath here
@@ -94,7 +76,7 @@ module: {
                     {
                         loader: 'css-loader',
                         options: {
-                            minimize: env.NODE_ENV === 'production' //css压缩
+                            minimize: env === 'production' //css压缩
                         }
                     },
                     {
@@ -151,15 +133,15 @@ module: {
         ]
     },
     plugins: [
-        ...(env.NODE_ENV === 'production' ? [
+        ...(env === 'production' ? [
             new CleanWebpackPlugin(paths.distPath), //传入数组,指定要删除的目录
             new MiniCssExtractPlugin({
                 filename: 'static/css/[name].css'
             })
         ] : [
-            new webpack.NamedModulesPlugin(),
-            new webpack.HotModuleReplacementPlugin()
-        ]),
+                new webpack.NamedModulesPlugin(),
+                new webpack.HotModuleReplacementPlugin()
+            ]),
         new VueLoaderPlugin(),
         new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
             from: path.resolve(paths.srcPath, 'static'),
@@ -172,9 +154,9 @@ module: {
         }]),
         new HtmlWebpackPlugin({
             title: projectConfig.title || 'webpack',
-            hash: env.NODE_ENV === 'production',
-            filename: (env.NODE_ENV === 'production' && projectConfig.build.filename) || 'index.html',
-            template: path.resolve(paths.srcPath, (env.NODE_ENV === 'production' && projectConfig.build.template) || 'index.html')
+            hash: env === 'production',
+            filename: (env === 'production' && projectConfig.build.filename) || 'index.html',
+            template: path.resolve(paths.srcPath, (env === 'production' && projectConfig.build.template) || 'index.html')
         })
     ],
     resolve: {
@@ -196,7 +178,7 @@ module: {
             '@static': path.resolve(paths.srcPath, './static')
         }
     },
-    optimization: env.NODE_ENV === 'production' ? {
+    optimization: env === 'production' ? {
         minimizer: [
             new UglifyJSPlugin()
         ],
@@ -205,7 +187,7 @@ module: {
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
                     chunks: 'initial',
-                    name: 'vendors',
+                    name: 'vendors'
                 }
             }
         },
@@ -214,4 +196,4 @@ module: {
         }
     } : {}
 }
-}
+
