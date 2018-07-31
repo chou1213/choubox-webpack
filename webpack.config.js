@@ -60,7 +60,7 @@ module.exports = env => {
         devServer: {
             compress: true,
             contentBase: paths.distPath,
-            // host: ip[0],
+            host: ip[0],
             host: 'localhost',
             // port: 8084,
             hot: true, //模块热加载

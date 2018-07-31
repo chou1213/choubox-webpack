@@ -15,14 +15,13 @@ const paths = {
     srcPath: path.join(process.cwd(), 'src', project.filename), //子项目开发目录
     distPath: projectConfig.output.path || path.join(process.cwd(), 'dist', project.filename) //子项目打包目录
 };
-const env = 'development';
-
+const env = process.env.NODE_ENV || 'production';
+process.noDeprecation = true;
 module.exports = {
     context: projectConfig.srcPath,
     mode: env,
     devtool: env === 'production' ? false : 'inline-source-map',
     entry: {
-        // index: ['webpack-dev-server/client/index.js?http://localhost:8080', 'babel-polyfill', path.join(paths.srcPath, 'index.js')]
         index: ['babel-polyfill', path.join(paths.srcPath, 'index.js')]
     },
     output: Object.assign({
@@ -36,9 +35,7 @@ module.exports = {
     devServer: {
         compress: true,
         contentBase: paths.distPath,
-        // host: ip[0],
         host: 'localhost',
-        // port: 8084,
         hot: true, //模块热加载
         open: false, //自动打开浏览器
         inline: true,
