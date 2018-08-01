@@ -1,8 +1,0 @@
-$mainColor: #0C0D47;
-@mixin font($fontSize, $color, $weight:normal) {
-    font: {
-        size: $fontSize + px;
-        weight: $weight;
-    }
-    color: $color;
-}
