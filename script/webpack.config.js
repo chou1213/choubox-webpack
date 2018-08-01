@@ -7,8 +7,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //抽离css,可
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
-const env = process.env.NODE_ENV; //获取当前执行环境
-const project = require('../project.config');
+const env = process.env.NODE_ENV || 'production'; //获取当前执行环境
+const project = require('./project.config');
 const projectConfig = require(`../src/${project.filename}/config`); //子项目配置
 const paths = {
     root: path.resolve(process.cwd()), //脚本所在根目录
@@ -87,7 +87,6 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules(?![\\/].*bigoapi[\\/])/, // 不检测的文件
-
                 use: {
                     loader: 'babel-loader'
                 }
@@ -131,7 +130,9 @@ module.exports = {
     },
     plugins: [
         ...(env === 'production' ? [
-            new CleanWebpackPlugin(paths.distPath), //传入数组,指定要删除的目录
+            new CleanWebpackPlugin(paths.distPath, {
+                root: process.cwd()
+            }), //传入数组,指定要删除的目录
             new MiniCssExtractPlugin({
                 filename: 'static/css/[name].css'
             })

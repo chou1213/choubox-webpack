@@ -4,10 +4,9 @@
     "description": "",
     "main": "webpack.config.js",
     "scripts": {
-        "dev": "node ./script/start.js",
-        "dist": "node ./script/build.js",
-        "start": "webpack-dev-server --env.NODE_ENV=development",
-        "build": "webpack --env.NODE_ENV=production"
+        "start": "node ./script/start.js",
+        "build": "node ./script/build.js",
+        "webpack": "webpack --config ./script/webpack.config.js"
     },
     "keywords": [],
     "author": "",

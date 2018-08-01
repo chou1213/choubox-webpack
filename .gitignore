@@ -1,6 +1,8 @@
 .DS_Store
 node_modules/
 /dist/
+/src/page-8282
+/src/act-9017
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

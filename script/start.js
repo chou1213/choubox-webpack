@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const portfinder = require('portfinder');
 const opn = require('opn');
-const webpackConfig = require('./webpack.conf.js'); //webpack配置
+const webpackConfig = require('./webpack.config'); //webpack配置
 
 //获取本地ip
 const ip = (function() {

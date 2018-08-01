@@ -3,3 +3,4 @@ static/
 lang/
 script/
 webpack.config.js
+project.config.js

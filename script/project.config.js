@@ -1,4 +1,4 @@
 module.exports = {
-    filename: 'px2rem',
+    filename: 'page-8282',
     useEslint: true
 }
