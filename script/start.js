@@ -3,9 +3,9 @@ const os = require('os');
 const ifaces = os.networkInterfaces();
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const portfinder = require('portfinder'); //判断算口是否被占用
-const opn = require('opn'); //打开浏览器
-const webpackConfig = require('./webpack.conf.js');
+const portfinder = require('portfinder');
+const opn = require('opn');
+const webpackConfig = require('./webpack.conf.js'); //webpack配置
 
 //获取本地ip
 const ip = (function() {
@@ -29,20 +29,21 @@ const ip = (function() {
     return _arr;
 })();
 
-portfinder.basePort = process.env.PORT || 8080;
+portfinder.basePort = webpackConfig.devServer.port; //默认端口是8080
+//判断当前端口是否被占用，是则递增到8081，以此类推
 portfinder.getPortPromise()
     .then((port) => {
-        webpackConfig.entry.index.unshift('webpack-dev-server/client/index.js?http://localhost:' + port);
-        WebpackDevServer.addDevServerEntrypoints(webpackConfig, webpackConfig.devServer);
-        const compiler = webpack(webpackConfig);
+        webpackConfig.entry.index.unshift('webpack-dev-server/client/index.js?http://localhost:' + port); //node api启动webpack-dev-server
+        WebpackDevServer.addDevServerEntrypoints(webpackConfig, webpackConfig.devServer); //启用HMR
+        const compiler = webpack(webpackConfig); //webpack实例
         const server = new WebpackDevServer(compiler, webpackConfig.devServer);
         server.listen(port, '0.0.0.0', (err) => {
             if (err) {
                 console.log(err);
-                return false;
+                return;
             }
             console.log(`\x1B[32m Starting server on http://${ip[0]}:${port} \x1B[39m`);
-            webpackConfig.devServer.open && opn(`http://${ip[0]}:${port}`);
+            webpackConfig.devServer.open && opn(`http://${ip[0]}:${port}`); //打开浏览器
         });
     })
     .catch((err) => {

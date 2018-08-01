@@ -1,4 +1,5 @@
 dist/
 static/
 lang/
+script/
 webpack.config.js
