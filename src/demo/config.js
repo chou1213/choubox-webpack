@@ -1,10 +1,10 @@
 const path = require('path');
-const HOST = 'https://bggray-mobile.like.video'; //代理域名
+const HOST = 'https://restapi.amap.com'; //代理域名
 
 module.exports = {
     title: 'demo', // document.title
     output: {
-        path: path.resolve(process.cwd(), 'dist/demo2'), //输出路径, 默认dist目录下同名文件
+        path: path.resolve(process.cwd(), 'dist/demo'), //输出路径, 默认dist目录下同名文件
         publicPath: '' //打包静态资源的路径，默认./
     },
     build: {
@@ -13,7 +13,7 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/live': {
+            '/v3': {
                 target: HOST,
                 changeOrigin: true
             }

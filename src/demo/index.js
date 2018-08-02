@@ -1,6 +1,6 @@
 import Vue from 'vue'
-
-import App from '@/views/index'
+import 'normalize.css';
+import App from '@/views/app'
 
 new Vue({
     el: '#app',

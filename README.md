@@ -1,8 +1,10 @@
 ## webpack5-h5
-> 开发html5的构建工具
+> 构建html5
  
 ## install
 > npm install
 
- ## Get started
+## Get started
  > npm start
+
+## 目录结构

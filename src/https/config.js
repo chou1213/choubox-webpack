@@ -1,11 +1,11 @@
 const path = require('path')
-const HOST = "https://bggray-mobile.like.video";
+const HOST = 'https://bggray-mobile.like.video';
 
 module.exports = {
-    title: "https",
+    title: 'https',
     devServer: {
         proxy: {
-            "/live": {
+            '/live': {
                 target: HOST,
                 changeOrigin: true
             }
