@@ -23,7 +23,7 @@
 │   └── webpack.config.js (webpack配置信息)
 │
 ├── src
-│   ├── demo1 (子项目)
+│   ├── demo1 (子项目)
 │   │   ├── assets (子项目资源)
 │   │   ├── components (子项目组件)
 │   │   ├── services (子项目api接口分装)
@@ -34,7 +34,7 @@
 │   │   ├── index.html (子项目html模版)
 │   │   └── index.php (子项目打包模版，仅在打包php文件才需要)
 │   │  
-│   └── demo2 (子项目)
+│   └── demo2 (子项目)
 │
 ├── static (静态资源，项目打包不编译该目录的文件，而是直接把目录复制到打包的目录)
 │   ├── img 
