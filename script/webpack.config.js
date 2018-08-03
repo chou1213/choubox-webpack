@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //抽离css,可
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
-const env = process.env.NODE_ENV || 'production'; //获取当前执行环境
+const env = process.env.NODE_ENV || 'development'; //获取当前执行环境
 const project = require('./project.config');
 const projectConfig = require(`../src/${project.filename}/config`); //子项目配置
 const paths = {
@@ -38,8 +38,8 @@ module.exports = {
     devServer: {
         compress: true,
         contentBase: paths.distPath,
-        host: 'localhost',
-        port: 8080, //默认端口
+        host: '0.0.0.0',
+        // port: 8080, //默认端口
         hot: true, //模块热加载
         open: false, //自动打开浏览器
         inline: true,

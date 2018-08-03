@@ -29,12 +29,11 @@ const ip = (function() {
     return _arr;
 })();
 
-portfinder.basePort = webpackConfig.devServer.port; //默认端口是8080
+portfinder.basePort = 8080; //默认端口是8080
 //判断当前端口是否被占用，是则递增到8081，以此类推
 portfinder.getPortPromise()
     .then((port) => {
-        webpackConfig.entry.index.unshift('webpack-dev-server/client/index.js?http://localhost:' + port); //node api启动webpack-dev-server
-        WebpackDevServer.addDevServerEntrypoints(webpackConfig, webpackConfig.devServer); //启用HMR
+        WebpackDevServer.addDevServerEntrypoints(webpackConfig, webpackConfig.devServer); //node api启动webpack-dev-server,启用HMR
         const compiler = webpack(webpackConfig); //webpack实例
         const server = new WebpackDevServer(compiler, webpackConfig.devServer);
         server.listen(port, '0.0.0.0', (err) => {
