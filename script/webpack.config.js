@@ -137,9 +137,9 @@ module.exports = {
                 filename: 'static/css/[name].css'
             })
         ] : [
-            new webpack.NamedModulesPlugin(),
-            new webpack.HotModuleReplacementPlugin()
-        ]),
+                new webpack.NamedModulesPlugin(),
+                new webpack.HotModuleReplacementPlugin()
+            ]),
         new VueLoaderPlugin(),
         new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
             from: path.resolve(paths.srcPath, 'static'),

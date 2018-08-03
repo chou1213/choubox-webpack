@@ -8,32 +8,31 @@
 </template>
 
 <script>
-import { weather } from '@services'
+import { weather } from "@services";
 export default {
-    data() {
-        return {
-            data: ''
-        }
-    },
-    methods: {
-        request() {
-            console.log(this);
+  data() {
+    return {
+      data: ""
+    };
+  },
+  methods: {
+    request() {
+      console.log(this);
 
-            weather({
-                key: '7fe23d90453caee664bdd8483ea4443e',
-                city: '440100'
-            }).then((res) => {
-                let data = res.lives[0];
-                console.log(data)
-                this.data = `${data.province}${data.city}-${data.reporttime}-${data.temperature}度-${data.weather}-${data.winddirection}风`;
-
-            });
-        }
-    },
-    components: {
-
+      weather({
+        key: "7fe23d90453caee664bdd8483ea4443e",
+        city: "440100"
+      }).then(res => {
+        let data = res.lives[0];
+        console.log(data);
+        this.data = `${data.province}${data.city}-${data.reporttime}-${
+          data.temperature
+        }度-${data.weather}-${data.winddirection}风`;
+      });
     }
-}
+  },
+  components: {}
+};
 </script>
 
 <style lang='scss' scoped>
