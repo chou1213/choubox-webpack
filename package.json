@@ -6,7 +6,8 @@
     "scripts": {
         "start": "node ./script/start.js",
         "build": "node ./script/build.js",
-        "webpack": "webpack --config ./script/webpack.config.js"
+        "server": "webpack-dev-server --config ./script/webpack.config.js && process.env.NODE_ENV=development",
+        "webpack": "webpack --config ./script/webpack.config.js && process.env.NODE_ENV=production"
     },
     "keywords": [],
     "author": "",
