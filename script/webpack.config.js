@@ -140,6 +140,7 @@ module.exports = {
                 filename: 'static/css/[name].css'
             })
         ] : [
+<<<<<<< HEAD
             new BundleAnalyzerPlugin({
                 analyzerMode: 'server',
                 analyzerHost: '127.0.0.1',
@@ -155,6 +156,11 @@ module.exports = {
             new webpack.NamedModulesPlugin(),
             new webpack.HotModuleReplacementPlugin()
         ]),
+=======
+                new webpack.NamedModulesPlugin(),
+                new webpack.HotModuleReplacementPlugin()
+            ]),
+>>>>>>> d802e18d3cb72911403d87e7e4e386b2faea5f2f
         new VueLoaderPlugin(),
         new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
             from: path.resolve(paths.srcPath, 'static'),

@@ -18,9 +18,9 @@
 │    
 ├── script
 │   ├── build.js (打包项目入口)
-│   ├── project.config.js (开发项目配置信息)
+│   ├── project.config.js (开发项目配置)
 │   ├── start.js (开发项目入口)
-│   └── webpack.config.js (webpack配置信息)
+│   └── webpack.config.js (webpack配置)
 │
 ├── src
 │   ├── demo1 (子项目)
@@ -41,3 +41,5 @@
 │   └── js 
 
 ```
+
+### 开发项目配置
