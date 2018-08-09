@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -94,12 +95,14 @@ module.exports = {
             {
                 test: /\.(png|jp?g|gif)$/,
                 use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10000,
-                        name: 'static/img/[name].[hash:7].[ext]'
-                    }
-                }]
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            name: 'static/img/[name].[hash:7].[ext]'
+                        }
+                    },
+                    ...(env === 'production') ? [{ loader: 'image-webpack-loader', options: { name: 'static/img/[name].[hash:7].[ext]', disable: true, bypassOnDebug: true } }] : []
+                ]
             },
             {
                 test: /\.vue$/,
@@ -137,6 +140,18 @@ module.exports = {
                 filename: 'static/css/[name].css'
             })
         ] : [
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'server',
+                analyzerHost: '127.0.0.1',
+                analyzerPort: 8889,
+                reportFilename: 'report.html',
+                defaultSizes: 'parsed',
+                openAnalyzer: true,
+                generateStatsFile: false,
+                statsFilename: 'stats.json',
+                statsOptions: null,
+                logLevel: 'info'
+            }),
             new webpack.NamedModulesPlugin(),
             new webpack.HotModuleReplacementPlugin()
         ]),
