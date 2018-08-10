@@ -1,4 +1,1 @@
-module.exports = {
-    filename: 'demo',
-    useEslint: true
-}
+module.exports={filename:"quickStock"}

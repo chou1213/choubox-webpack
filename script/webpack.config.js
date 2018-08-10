@@ -48,7 +48,7 @@ module.exports = {
     },
     module: {
         rules: [
-            ...(project.useEslint ? [{
+            ...(projectConfig.useEslint ? [{
                 test: /\.js|vue$/,
                 use: {
                     loader: 'eslint-loader',
@@ -146,7 +146,7 @@ module.exports = {
                 analyzerPort: 8889,
                 reportFilename: 'report.html',
                 defaultSizes: 'parsed',
-                openAnalyzer: true,
+                openAnalyzer: false,
                 generateStatsFile: false,
                 statsFilename: 'stats.json',
                 statsOptions: null,

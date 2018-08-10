@@ -18,5 +18,6 @@ module.exports = {
                 changeOrigin: true
             }
         }
-    }
+    },
+    useEslint: false
 }
