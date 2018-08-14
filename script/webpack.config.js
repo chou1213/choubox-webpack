@@ -44,7 +44,7 @@ module.exports = {
         hot: true, //模块热加载
         open: false, //自动打开浏览器
         inline: true,
-        quiet: true,
+        quiet: false,
         proxy: projectConfig.devServer.proxy //代理
     },
     module: {
