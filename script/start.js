@@ -12,7 +12,6 @@ const projectname = process.argv[2];
 //根据参数，重写配置文件
 if (typeof projectname !== 'undefined') {
     let template = 'module.exports={filename:"' + projectname + '"}';
-    console.log(path.resolve(__dirname, './project.config.js'));
     fs.writeFileSync(path.resolve(__dirname, './project.config.js'), template, 'utf8');
 }
 

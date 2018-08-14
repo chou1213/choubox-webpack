@@ -1,1 +1,1 @@
-module.exports={filename:"quickStock"}
+module.exports={filename:"px2rem"}

@@ -44,6 +44,7 @@ module.exports = {
         hot: true, //模块热加载
         open: false, //自动打开浏览器
         inline: true,
+        quiet: true,
         proxy: projectConfig.devServer.proxy //代理
     },
     module: {
@@ -133,14 +134,7 @@ module.exports = {
     },
     plugins: [
         ...(env === 'production' ? [
-            new CleanWebpackPlugin(paths.distPath, {
-                root: process.cwd()
-            }), //传入数组,指定要删除的目录
-            new MiniCssExtractPlugin({
-                filename: 'static/css/[name].css'
-            })
-        ] : [
-            new BundleAnalyzerPlugin({
+            ...(process.env.npm_config_report ? [new BundleAnalyzerPlugin({
                 analyzerMode: 'server',
                 analyzerHost: '127.0.0.1',
                 analyzerPort: 8889,
@@ -151,7 +145,14 @@ module.exports = {
                 statsFilename: 'stats.json',
                 statsOptions: null,
                 logLevel: 'info'
-            }),
+            })] : []), //npm run build --report 分析项目依赖关系
+            new CleanWebpackPlugin(paths.distPath, {
+                root: process.cwd()
+            }), //传入数组,指定要删除的目录
+            new MiniCssExtractPlugin({
+                filename: 'static/css/[name].css'
+            })
+        ] : [
             new webpack.NamedModulesPlugin(),
             new webpack.HotModuleReplacementPlugin()
         ]),
