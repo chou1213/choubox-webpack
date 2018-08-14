@@ -6,6 +6,13 @@
 
 ## Get started
 > npm start
+>
+> npm start <filename>    #运行某个项目
+
+## build
+> npm run build
+>
+> npm run build --report  #查看当前项目的依赖关系
 
 ## 目录结构
 ```
