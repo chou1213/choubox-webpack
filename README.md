@@ -43,10 +43,21 @@
 │   │  
 │   └── demo2 (子项目)
 │
-├── static (静态资源，项目打包不编译该目录的文件，而是直接把目录复制到打包的目录)
+├── static (静态资源，项目打包不编译该目录的文件，而是直接把目录复制到打包的目录)
 │   ├── img 
 │   └── js 
 
 ```
 
-### 开发项目配置
+## 项目配置
+> npm start        #开发环境编译时，依赖project.config.js配置信息运行指定项目
+>
+> npm start demo   #重置project.config.js的filename项目名称并运行
+```javascript
+// script/project.config.js
+// filename 开发项目名称
+
+module.exports = { "filename" : "px2rem" }
+```
+
+
