@@ -1,4 +1,1 @@
-module.exports = {
-    filename: 'kiskis-act',
-    useEslint: true
-}
+module.exports = { "filename": "quickStock" }

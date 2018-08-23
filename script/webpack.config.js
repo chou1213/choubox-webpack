@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -43,11 +44,12 @@ module.exports = {
         hot: true, //模块热加载
         open: false, //自动打开浏览器
         inline: true,
+        quiet: false,
         proxy: projectConfig.devServer.proxy //代理
     },
     module: {
         rules: [
-            ...(project.useEslint ? [{
+            ...(projectConfig.useEslint ? [{
                 test: /\.js|vue$/,
                 use: {
                     loader: 'eslint-loader',
@@ -94,12 +96,14 @@ module.exports = {
             {
                 test: /\.(png|jp?g|gif)$/,
                 use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10000,
-                        name: 'static/img/[name].[hash:7].[ext]'
-                    }
-                }]
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            name: 'static/img/[name].[hash:7].[ext]'
+                        }
+                    },
+                    ...(env === 'production') ? [{ loader: 'image-webpack-loader', options: { name: 'static/img/[name].[hash:7].[ext]', disable: true, bypassOnDebug: true } }] : []
+                ]
             },
             {
                 test: /\.vue$/,
@@ -130,6 +134,18 @@ module.exports = {
     },
     plugins: [
         ...(env === 'production' ? [
+            ...(process.env.npm_config_report ? [new BundleAnalyzerPlugin({
+                analyzerMode: 'server',
+                analyzerHost: '127.0.0.1',
+                analyzerPort: 8889,
+                reportFilename: 'report.html',
+                defaultSizes: 'parsed',
+                openAnalyzer: false,
+                generateStatsFile: false,
+                statsFilename: 'stats.json',
+                statsOptions: null,
+                logLevel: 'info'
+            })] : []), //npm run build --report 分析项目依赖关系
             new CleanWebpackPlugin(paths.distPath, {
                 root: process.cwd()
             }), //传入数组,指定要删除的目录
@@ -137,9 +153,9 @@ module.exports = {
                 filename: 'static/css/[name].css'
             })
         ] : [
-                new webpack.NamedModulesPlugin(),
-                new webpack.HotModuleReplacementPlugin()
-            ]),
+            new webpack.NamedModulesPlugin(),
+            new webpack.HotModuleReplacementPlugin()
+        ]),
         new VueLoaderPlugin(),
         new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
             from: path.resolve(paths.srcPath, 'static'),

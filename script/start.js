@@ -1,10 +1,20 @@
 process.env.NODE_ENV = 'development';
+const fs = require('fs');
+const path = require('path');
 const os = require('os');
 const ifaces = os.networkInterfaces();
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const portfinder = require('portfinder');
 const opn = require('opn');
+const projectname = process.argv[2];
+
+//根据参数，重写配置文件
+if (typeof projectname !== 'undefined') {
+    let template = 'module.exports = { "filename" : "' + projectname + '" }';
+    fs.writeFileSync(path.resolve(__dirname, './project.config.js'), template, 'utf8');
+}
+
 const webpackConfig = require('./webpack.config'); //webpack配置
 
 //获取本地ip
