@@ -1,4 +1,4 @@
 module.exports = {
-    filename: 'demo',
+    filename: 'kiskis-act',
     useEslint: true
 }

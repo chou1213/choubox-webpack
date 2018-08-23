@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-axios.defaults.timeout = 50000;//超时
-axios.defaults.baseURL = '';//请求接口域名
+axios.defaults.timeout = 50000; //超时
+axios.defaults.baseURL = ''; //请求接口域名
 axios.defaults.transformRequest = [(data) => {
     let str = []
     for (let i in data) {
@@ -13,6 +13,7 @@ axios.defaults.transformRequest = [(data) => {
 // http request 拦截器
 axios.interceptors.request.use(
     config => {
+        console.log(config);
         return config
     },
     error => {
@@ -22,7 +23,6 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
-        //axios.defaults.headers['token'] = ''; 在header保存token
         return response.data
     },
     error => {
