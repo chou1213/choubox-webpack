@@ -1,1 +1,1 @@
-module.exports = { "filename": "quickStock" }
+module.exports = { "filename" : "kiskis-act" }
