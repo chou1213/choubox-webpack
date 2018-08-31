@@ -1,4 +1,4 @@
-## webpack5-h5
+## webpack4-h5
 > 构建html5
  
 ## install
