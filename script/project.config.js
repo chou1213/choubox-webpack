@@ -1,1 +1,3 @@
-module.exports = { "filename" : "kiskis-act" }
+module.exports = {
+    'filename': 'kiskis-act'
+};
