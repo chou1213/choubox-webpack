@@ -1,3 +1,3 @@
 module.exports = {
-    'filename': 'kiskis-act'
+    'filename': 'px2rem'
 };

@@ -11,8 +11,8 @@ const projectname = process.argv[2];
 
 //根据参数，重写配置文件
 if (typeof projectname !== 'undefined') {
-    let template = 'module.exports = { "filename" : "' + projectname + '" }';
-    fs.writeFileSync(path.resolve(__dirname, './project.config.js'), template, 'utf8');
+    let projectConfig = `module.exports = {\n    'filename': '${projectname}'\n};`;
+    fs.writeFileSync(path.resolve(__dirname, './project.config.js'), projectConfig, 'utf8');
 }
 
 const webpackConfig = require('./webpack.config'); //webpack配置
