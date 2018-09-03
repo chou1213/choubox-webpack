@@ -19,5 +19,6 @@ module.exports = {
             }
         }
     },
+    open: true, //编译完成是否打开页面
     useEslint: false
 }

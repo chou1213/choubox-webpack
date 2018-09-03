@@ -41,7 +41,7 @@ module.exports = {
         host: '0.0.0.0',
         // port: 8080, //默认端口
         hot: true, //模块热加载
-        open: false, //自动打开浏览器
+        open: projectConfig.open || false, //自动打开浏览器
         inline: true,
         quiet: false,
         proxy: projectConfig.devServer.proxy //代理
