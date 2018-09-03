@@ -9,7 +9,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 const env = process.env.NODE_ENV || 'development'; //获取当前执行环境
-const project = require('./project.config');
+const project = require('./project.config'); //编译项目配置
 const projectConfig = require(`../src/${project.filename}/config`); //子项目配置
 const paths = {
     root: path.resolve(process.cwd()), //脚本所在根目录
@@ -17,24 +17,23 @@ const paths = {
     distPath: projectConfig.output.path || path.join(process.cwd(), 'dist', project.filename) //子项目打包目录
 };
 
-
 process.noDeprecation = true;
 
 
 module.exports = {
-    context: projectConfig.srcPath,
-    mode: env,
-    devtool: env === 'production' ? false : 'inline-source-map',
+    context: process.cwd(), //entry入口文件基于该路径查找
+    mode: env, //webpack编译模式
+    devtool: env === 'production' ? false : 'inline-source-map', //打包后生产源文件源代码映射
     entry: {
         index: ['babel-polyfill', path.join(paths.srcPath, 'index.js')]
     },
     output: Object.assign({
-        path: projectConfig.output.path || paths.distPath,
+        path: projectConfig.output.path || paths.distPath, //输出路径
         filename: 'static/js/[name].[hash:7].js', //入口文件输出的文件名
-        publicPath: ''
+        publicPath: '' //“开发模式”下静态资源的前缀
     }, env === 'production' ? {
         // chunkFilename: 'static/js/[name].js', //非入口文件输出的文件名
-        publicPath: projectConfig.output.publicPath
+        publicPath: projectConfig.output.publicPath //“打包”后静态资源路径的前缀
     } : {}),
     devServer: {
         compress: true,
@@ -102,7 +101,7 @@ module.exports = {
                             name: 'static/img/[name].[hash:7].[ext]'
                         }
                     },
-                    ...(env === 'production') ? [{ loader: 'image-webpack-loader', options: { name: 'static/img/[name].[hash:7].[ext]', disable: true, bypassOnDebug: true } }] : []
+                    ...(env === 'production') ? [{ loader: 'image-webpack-loader' }] : []
                 ]
             },
             {
