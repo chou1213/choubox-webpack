@@ -41,6 +41,7 @@ npm start <filename>   //运行某个项目
 │   │   ├── router (子项目路由配置)
 │   │   ├── views (子项目页面)
 │   │   ├── config.js (子项目配置)
+│   │   ├── app.vue (子项目入口vue文件)
 │   │   ├── index.js (子项目入口文件)
 │   │   ├── index.html (子项目html模版)
 │   │   └── index.php (子项目打包模版，仅在打包php文件才需要)
@@ -87,6 +88,7 @@ module.exports = {
             }
         }
     },
+    open: true, //编译完成是否打开页面
     useEslint: false  //是否开启eslint
 }
 ```
