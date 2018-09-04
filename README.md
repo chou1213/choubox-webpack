@@ -40,6 +40,8 @@ npm start <filename>   //运行某个项目
 │   │   ├── services (子项目api接口分装)
 │   │   ├── router (子项目路由配置)
 │   │   ├── views (子项目页面)
+│   │   │   └── ... 
+│   │   │
 │   │   ├── config.js (子项目配置)
 │   │   ├── app.vue (子项目入口vue文件)
 │   │   ├── index.js (子项目入口文件)
@@ -47,6 +49,7 @@ npm start <filename>   //运行某个项目
 │   │   └── index.php (子项目打包模版，仅在打包php文件才需要)
 │   │  
 │   └── demo2 (子项目)
+│   │   ├ ...
 │
 ├── static (静态资源，项目打包不编译该目录的文件，而是直接把目录复制到打包的目录)
 │   ├── img 
