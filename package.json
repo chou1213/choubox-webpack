@@ -1,5 +1,5 @@
 {
-    "name": "webpack-demo3",
+    "name": "choubox-webpack",
     "version": "1.0.0",
     "description": "",
     "main": "webpack.config.js",
@@ -57,6 +57,7 @@
         "vue-router": "^3.0.1",
         "vue-style-loader": "^4.1.0",
         "vue-template-compiler": "^2.5.17",
+        "vuex": "^3.0.1",
         "webpack": "^4.17.1",
         "webpack-bundle-analyzer": "^2.13.1",
         "webpack-cli": "^3.1.0",
