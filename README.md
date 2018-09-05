@@ -1,5 +1,5 @@
-## webpack4-h5
-> 构建html5
+## choubox-webpack
+> 基于webpack4的配置，用于开发web项目
  
 ## install
 > npm install
