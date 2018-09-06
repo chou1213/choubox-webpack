@@ -97,3 +97,6 @@ module.exports = {
     useEslint: false  //是否开启eslint
 }
 ```
+
+## 想快速创建项目
+> 请看choubox命令行工具，[choubox链接](https://github.com/chou1213/choubox)
