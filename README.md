@@ -99,4 +99,4 @@ module.exports = {
 ```
 
 ## 想快速创建项目
-> 请看choubox命令行工具，[choubox链接](https://github.com/chou1213/choubox)
+> 请看choubox命令行工具，[了解choubox](https://github.com/chou1213/choubox)
