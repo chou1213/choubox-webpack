@@ -36,6 +36,7 @@ module.exports = {
         publicPath: projectConfig.output.publicPath //“打包”后静态资源路径的前缀
     } : {}),
     devServer: {
+        clientLogLevel: 'none', //隐藏浏览器打印信息
         compress: true,
         contentBase: paths.distPath,
         host: '0.0.0.0',
@@ -43,7 +44,7 @@ module.exports = {
         hot: true, //模块热加载
         open: projectConfig.open || false, //自动打开浏览器
         inline: true,
-        quiet: false,
+        quiet: false, //是否隐藏控制台打印信息
         proxy: projectConfig.devServer.proxy //代理
     },
     module: {
