@@ -15,7 +15,7 @@ npm start <filename>   //运行指定项目
 ```javascript
 npm run build //基于script/project.config.js的filename打包
 
-npm start <filename>   //打包指定项目
+npm run build <filename>   //打包指定项目
 
 npm run build --report  //查看当前项目的依赖关系
 ```
