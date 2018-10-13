@@ -29,9 +29,10 @@ module.exports = {
     },
     output: Object.assign({
         path: projectConfig.output.path || paths.distPath, //输出路径
-        filename: 'static/js/[name].js', //入口文件输出的文件名
+        filename: 'static/js/[name].js?[hash:6]', //入口文件输出的文件名，开发环境使用hash，以便用于热更新
         publicPath: '' //“开发模式”下静态资源的前缀
     }, env === 'production' ? {
+        filename: 'static/js/[name].js?[chunkhash:6]', //入口文件输出的文件名,生产环境用chunkhash，因为chunkhash和热更新不能同时使用
         // chunkFilename: 'static/js/[name].js', //非入口文件输出的文件名
         publicPath: projectConfig.output.publicPath //“打包”后静态资源路径的前缀
     } : {}),
@@ -168,7 +169,6 @@ module.exports = {
         }]),
         new HtmlWebpackPlugin({
             title: projectConfig.title || 'webpack',
-            hash: env === 'production',
             filename: (env === 'production' && projectConfig.build.filename) || 'index.html',
             template: path.resolve(paths.srcPath, (env === 'production' && projectConfig.build.template) || 'index.html')
         })
