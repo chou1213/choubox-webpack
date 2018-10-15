@@ -29,11 +29,11 @@ module.exports = {
     },
     output: Object.assign({
         path: projectConfig.output.path || paths.distPath, //输出路径
-        filename: 'static/js/[name].js?[hash:6]', //入口文件输出的文件名，开发环境使用hash，以便用于热更新
+        filename: 'static/js/[name].js', //入口文件输出的文件名，不需要hash，不用再开发环境做持久缓存
         publicPath: '' //“开发模式”下静态资源的前缀
     }, env === 'production' ? {
         filename: 'static/js/[name].js?[chunkhash:6]', //入口文件输出的文件名,生产环境用chunkhash，因为chunkhash和热更新不能同时使用
-        // chunkFilename: 'static/js/[name].js', //非入口文件输出的文件名
+        chunkFilename: 'static/js/[name].js?[chunkhash:6]', //非入口文件输出的文件名，例如在按需加载（异步）模块的时候，又需要被打包出来的文件命名配置,因为非入口文件no-name，所以[name]会被[id]替换。
         publicPath: projectConfig.output.publicPath //“打包”后静态资源路径的前缀
     } : {}),
     devServer: {
@@ -151,11 +151,11 @@ module.exports = {
                 root: process.cwd()
             }), //传入数组,指定要删除的目录
             new MiniCssExtractPlugin({
-                filename: 'static/css/[name].css'
+                filename: 'static/css/[name].css?[contenthash:6]'
             })
         ] : [
             new webpack.NamedModulesPlugin(),
-            new webpack.HotModuleReplacementPlugin()
+            new webpack.HotModuleReplacementPlugin() //热加载
         ]),
         new VueLoaderPlugin(),
         new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
@@ -193,6 +193,7 @@ module.exports = {
         }
     },
     optimization: env === 'production' ? {
+        //压缩js文件
         minimizer: [
             new UglifyJSPlugin()
         ],
