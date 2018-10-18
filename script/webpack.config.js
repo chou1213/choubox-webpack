@@ -17,6 +17,7 @@ const paths = {
     distPath: projectConfig.output.path || path.join(process.cwd(), 'dist', project.filename) //子项目打包目录
 };
 
+//设置在当前node.js进程中，是否标记--no-deprecation。设置在控制台是否看到警告信息
 process.noDeprecation = true;
 
 
@@ -103,7 +104,7 @@ module.exports = {
                             name: 'static/img/[name].[hash:7].[ext]'
                         }
                     },
-                    ...(env === 'production') ? [{ loader: 'image-webpack-loader' }] : []
+                    ...(env === 'production') ? [{ loader: 'image-webpack-loader' }] : [] //是否压缩图片
                 ]
             },
             {
@@ -152,12 +153,15 @@ module.exports = {
             }), //传入数组,指定要删除的目录
             new MiniCssExtractPlugin({
                 filename: 'static/css/[name].css?[contenthash:6]'
-            })
+            }),
+            //当vendor没有变化,稳定moudle.id
+            new webpack.HashedModuleIdsPlugin(),
         ] : [
             new webpack.NamedModulesPlugin(),
             new webpack.HotModuleReplacementPlugin() //热加载
         ]),
         new VueLoaderPlugin(),
+        //复制根目录static文件，以及子项目static文件
         new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
             from: path.resolve(paths.srcPath, 'static'),
             to: path.resolve(paths.distPath, 'static'),
