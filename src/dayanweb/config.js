@@ -24,5 +24,6 @@ module.exports = {
         }
     },
     open: false, //编译完成是否打开页面
-    useEslint: true //是否需要eslint校验
+    useEslint: true, //是否需要eslint校验
+    px2rem: true //是否使用px2rem插件
 }
