@@ -48,7 +48,7 @@ module.exports = {
         inline: true,
         quiet: false, //是否隐藏控制台打印信息
         proxy: projectConfig.devServer.proxy, //代理
-        https: projectConfig.devServer.https //使用HTTPS服务
+        https: projectConfig.devServer.https || false //使用HTTPS服务
     },
     module: {
         rules: [

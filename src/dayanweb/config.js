@@ -16,7 +16,7 @@ module.exports = {
         // filename: 'index.php'  //打包输出的文件名
     },
     devServer: {
-        https: false,
+        https: true,
         proxy: {
             '/duode': {
                 target: HOST,
