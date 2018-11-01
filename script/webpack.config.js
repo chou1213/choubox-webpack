@@ -20,6 +20,16 @@ const paths = {
 //设置在当前node.js进程中，是否标记--no-deprecation。设置在控制台是否看到警告信息
 process.noDeprecation = true;
 
+function recursiveIssuer(m) {
+    if (m.issuer) {
+        return recursiveIssuer(m.issuer);
+    } else if (m.name) {
+        return m.name;
+    } else {
+        return false;
+    }
+}
+
 
 module.exports = {
     context: process.cwd(), //entry入口文件基于该路径查找
@@ -175,6 +185,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: projectConfig.title || 'webpack',
             filename: (env === 'production' && projectConfig.build.filename) || 'index.html',
+            excludeChunks: ['test'],
             template: path.resolve(paths.srcPath, (env === 'production' && projectConfig.build.template) || 'index.html')
         })
     ],
