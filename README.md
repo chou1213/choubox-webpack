@@ -86,6 +86,7 @@ module.exports = {
         // filename: 'index.php'  //打包输出的文件名,不设置默认index.html
     },
     devServer: {
+        https:false, //开启https服务
         proxy: {
             '/api': {
                 target: HOST,
