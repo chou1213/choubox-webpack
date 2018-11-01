@@ -47,7 +47,8 @@ module.exports = {
         open: projectConfig.open || false, //自动打开浏览器
         inline: true,
         quiet: false, //是否隐藏控制台打印信息
-        proxy: projectConfig.devServer.proxy //代理
+        proxy: projectConfig.devServer.proxy, //代理
+        https: projectConfig.devServer.https //使用HTTPS服务
     },
     module: {
         rules: [

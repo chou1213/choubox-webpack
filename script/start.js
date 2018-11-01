@@ -51,7 +51,8 @@ portfinder.getPortPromise()
                 console.log(err);
                 return;
             }
-            console.log(`\x1B[32m Starting server on http://${ip[0]}:${port} \x1B[39m`);
+            let protocal = webpackConfig.devServer.https ? 'https' : 'http';
+            console.log(`\x1B[32m ==================================================== \n Starting server on ${protocal}://${ip[0]}:${port} \n ==================================================== \x1B[39m`);
             webpackConfig.devServer.open && opn(`http://${ip[0]}:${port}`); //打开浏览器
         });
     })
