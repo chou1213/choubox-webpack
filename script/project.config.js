@@ -1,3 +1,3 @@
 module.exports = {
-    'filename': 'test'
+    'filename': 'choubox-ui'
 };
