@@ -160,7 +160,7 @@ module.exports = {
                 logLevel: 'info'
             })] : []), //npm run build --report 分析项目依赖关系
             new CleanWebpackPlugin(paths.distPath, {
-                root: process.cwd()
+                root: path.resolve(paths.distPath, '../')
             }), //传入数组,指定要删除的目录
             new MiniCssExtractPlugin({
                 filename: 'static/css/[name].css?[contenthash:6]'
