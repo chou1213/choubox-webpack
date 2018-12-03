@@ -48,6 +48,7 @@ module.exports = {
         publicPath: projectConfig.output.publicPath //“打包”后静态资源路径的前缀
     } : {}),
     devServer: {
+        historyApiFallback: {}, //支持history路由模式
         clientLogLevel: 'none', //隐藏浏览器打印信息
         compress: true,
         contentBase: paths.distPath,
