@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlguin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //抽离css,可以异步加载css
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 const env = process.env.NODE_ENV || 'development'; //获取当前执行环境
@@ -212,7 +212,7 @@ module.exports = {
     optimization: env === 'production' ? {
         //压缩js文件
         minimizer: [
-            new UglifyJSPlugin()
+            new TerserPlugin()
         ],
         splitChunks: {
             cacheGroups: {
