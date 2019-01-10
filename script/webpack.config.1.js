@@ -16,38 +16,17 @@ const paths = {
     srcPath: path.join(process.cwd(), 'src', project.filename), //子项目开发目录
     distPath: projectConfig.output.path || path.join(process.cwd(), 'dist', project.filename) //子项目打包目录
 };
-let entry = {};
-let mutilPageHtml = [];
-let isSinglePage = fs.existsSync(path.join(paths.srcPath, 'index.js'));
 
 //设置在当前node.js进程中，是否标记--no-deprecation。设置在控制台是否看到警告信息
 process.noDeprecation = true;
-
-//判断子项目的根目录是否有index.js，如果有则是单页面构建，如果没有则是多页面构建
-if (isSinglePage) {
-    //有单文件入口
-    entry['index'] = ['babel-polyfill', path.join(paths.srcPath, 'index.js')];
-} else {
-    //遍历page多文件入口
-    fs.readdirSync(path.join(paths.srcPath, 'page')).forEach((element, index) => {
-        if (fs.existsSync(path.join(paths.srcPath, `page/${element}/index.js`))) {
-            let mutilPageConfig = fs.existsSync(path.join(paths.srcPath, `page/${element}/config.js`)) ? require(`../src/${project.filename}/page/${element}/config`) : {}; //page下每个页面的配置信息
-            entry[element] = ['babel-polyfill', path.join(paths.srcPath, `page/${element}/index.js`)];
-            mutilPageHtml.push(new HtmlWebpackPlugin({
-                title: projectConfig.title || 'webpack',
-                filename: (env === 'production' && projectConfig.build.filename) || `${element}.html`,
-                excludeChunks: ['test'],
-                template: path.resolve(paths.srcPath, (env === 'production' && projectConfig.build.template) || `page/${element}/index.html`)
-            }));
-        }
-    })
-}
 
 module.exports = {
     context: process.cwd(), //entry入口文件基于该路径查找
     mode: env, //webpack编译模式
     devtool: env === 'production' ? false : 'inline-source-map', //打包后生产源文件源代码映射
-    entry: entry,
+    entry: {
+        index: ['babel-polyfill', path.join(paths.srcPath, 'index.js')]
+    },
     output: Object.assign({
         path: projectConfig.output.path || paths.distPath, //输出路径
         filename: 'static/js/[name].js', //入口文件输出的文件名，不需要hash，不用再开发环境做持久缓存
@@ -193,13 +172,12 @@ module.exports = {
             to: path.resolve(paths.distPath, 'static'),
             toType: 'dir'
         }]),
-        ...(isSinglePage ? [new HtmlWebpackPlugin({
+        new HtmlWebpackPlugin({
             title: projectConfig.title || 'webpack',
             filename: (env === 'production' && projectConfig.build.filename) || 'index.html',
             excludeChunks: ['test'],
             template: path.resolve(paths.srcPath, (env === 'production' && projectConfig.build.template) || 'index.html')
-        })] : mutilPageHtml)
-
+        })
     ],
     resolve: {
         extensions: ['.js', '.vue', '.json'],
