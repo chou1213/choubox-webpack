@@ -36,11 +36,12 @@ npm run build --report  //查看当前项目的依赖关系
 │   └── webpack.config.js (webpack配置)
 │
 ├── src
-│   ├── demo1 (子项目)
+│   ├── demo1 (单页面入口子项目)
 │   │   ├── assets (子项目资源)
 │   │   ├── components (子项目组件)
 │   │   ├── services (子项目api接口分装)
 │   │   ├── router (子项目路由配置)
+│   │   ├── static (子项目静态资源)
 │   │   ├── views (子项目页面)
 │   │   │   └── ... 
 │   │   │
@@ -50,7 +51,17 @@ npm run build --report  //查看当前项目的依赖关系
 │   │   ├── index.html (子项目html模版)
 │   │   └── index.php (子项目打包模版，仅在打包php文件才需要)
 │   │  
-│   └── demo2 (子项目)
+│   │  
+│   │   ├── assets (子项目资源)
+│   │   ├── components (子项目组件)
+│   │   ├── services (子项目api接口分装)
+│   │   ├── page (子项目多页面)
+│   │   ├── static (子项目静态资源)
+│   │   │
+│   │   └──  config.js (子项目配置)
+│   │  
+│   │  
+│   └── demo3 (子项目)
 │   │   ├ ...
 │
 ├── static (静态资源，项目打包不编译该目录的文件，而是直接把目录复制到打包的目录)

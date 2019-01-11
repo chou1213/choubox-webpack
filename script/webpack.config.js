@@ -36,7 +36,7 @@ if (isSinglePage) {
             mutilPageHtml.push(new HtmlWebpackPlugin({
                 title: projectConfig.title || 'webpack',
                 filename: (env === 'production' && projectConfig.build.filename) || `${element}.html`,
-                excludeChunks: ['test'],
+                excludeChunks: fs.readdirSync(path.join(paths.srcPath, 'page')).filter(n => n !== element),
                 template: path.resolve(paths.srcPath, (env === 'production' && projectConfig.build.template) || `page/${element}/index.html`)
             }));
         }
@@ -225,12 +225,22 @@ module.exports = {
         minimizer: [
             new TerserPlugin()
         ],
+        //提取被重复引入的文件,避免在多入口重复打包文件
         splitChunks: {
             cacheGroups: {
+                //打包公共模块
                 vendors: {
-                    test: /[\\/]node_modules[\\/]/,
+                    test: /[\\/]node_modules[\\/]/, //指定限制范围，需要被匹配的文件/文件夹
                     chunks: 'initial',
                     name: 'vendors'
+                },
+                style: {
+                    name: 'style', //生成文件名
+                    test: /\.s?css$/,
+                    chunks: 'all',
+                    minChunks: 2, //entry引用次数大于此值
+                    enforce: true, //Tells webpack to ignore splitChunks.minSize, splitChunks.minChunks, splitChunks.maxAsyncRequests and splitChunks.maxInitialRequests options and always create chunks for this cache group.
+                    reuseExistingChunk: true //允许复用已经存在的代码块，而不是新建一个新的，需要在精确匹配到对应模块时候才会生效
                 }
             }
         },
