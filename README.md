@@ -51,13 +51,25 @@ npm run build --report  //查看当前项目的依赖关系
 │   │   ├── index.html (子项目html模版)
 │   │   └── index.php (子项目打包模版，仅在打包php文件才需要)
 │   │  
-│   │  
+│   ├── demo2 (duo 页面入口子项目)
 │   │   ├── assets (子项目资源)
 │   │   ├── components (子项目组件)
 │   │   ├── services (子项目api接口分装)
 │   │   ├── page (子项目多页面)
+│   │   │     ├── createFlag
+│   │   │     │       ├── config.js(多页面配置,可以配置改页面输出目录，资源路径，和子项目config.js参数一模一样)
+│   │   │     │       ├── index.vue (多页面入口)
+│   │   │     │       ├── index.html (多页面html模板)
+│   │   │     │ 
+│   │   │     ├── viewFlag
+│   │   │     │       ├── config.js(多页面配置)
+│   │   │     │       ├── index.vue (多页面入口)
+│   │   │     │       ├── index.html (多页面html模板)    
+│   │   │     │       
+│   │   │     ├── ...       
+│   │   │            
 │   │   ├── static (子项目静态资源)
-│   │   │
+│   │   │    
 │   │   └──  config.js (子项目配置)
 │   │  
 │   │  
