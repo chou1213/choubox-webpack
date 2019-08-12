@@ -1,4 +1,3 @@
-process.env.NODE_ENV = 'development';
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -18,12 +17,12 @@ if (typeof projectname !== 'undefined') {
 const webpackConfig = require('./webpack.config'); //webpack配置
 
 //获取本地ip
-const ip = (function() {
+const ip = (function () {
     let _arr = [];
     switch (os.platform()) {
         case 'win32':
-            Object.keys(ifaces).forEach(function(dev) {
-                ifaces[dev].forEach(function(details) {
+            Object.keys(ifaces).forEach(function (dev) {
+                ifaces[dev].forEach(function (details) {
                     if (details.family === 'IPv4') {
                         _arr.push(details.address);
                     }

@@ -1,4 +1,3 @@
-process.env.NODE_ENV = 'production';
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');

@@ -120,13 +120,13 @@ module.exports = {
             {
                 test: /\.(png|jp?g|gif)$/,
                 use: [{
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10000,
-                            name: 'static/img/[name].[hash:7].[ext]'
-                        }
-                    },
-                    ...(env === 'production') ? [{ loader: 'image-webpack-loader' }] : [] //是否压缩图片
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: 'static/img/[name].[hash:7].[ext]'
+                    }
+                },
+                ...(env === 'production') ? [{ loader: 'image-webpack-loader' }] : [] //是否压缩图片
                 ]
             },
             {
@@ -179,9 +179,9 @@ module.exports = {
             //当vendor没有变化,稳定moudle.id
             new webpack.HashedModuleIdsPlugin(),
         ] : [
-            new webpack.NamedModulesPlugin(),
-            new webpack.HotModuleReplacementPlugin() //热加载
-        ]),
+                new webpack.NamedModulesPlugin(),
+                new webpack.HotModuleReplacementPlugin() //热加载
+            ]),
         new VueLoaderPlugin(),
         //复制根目录static文件，以及子项目static文件
         new CopyWebpackPlguin([...(fs.existsSync(path.resolve(paths.srcPath, './static')) ? [{
@@ -204,20 +204,21 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
-            'vue': 'vue/dist/vue.esm.js',
+            'vue$': 'vue/dist/vue.esm.js',
             'COMMON': path.resolve(paths.root, './common'),
-            'XHR': path.resolve(paths.root, './common', 'XHR'), // TODO
-            'ASSETS': path.resolve(paths.root, './common', 'assets'),
-            'COMPONENTS': path.resolve(paths.root, './COMMON', 'components'),
-            'STATIC': path.resolve(paths.root, './static'),
-            '@': paths.srcPath,
-            '@assets': path.resolve(paths.srcPath, './assets'),
-            '@services': path.resolve(paths.srcPath, './services'), //TODO
-            '@lang': path.resolve(paths.srcPath, './lang'), //TODO
-            '@constant': path.resolve(paths.srcPath, './constant'), //TODO
-            '@components': path.resolve(paths.srcPath, './components'),
-            '@views': path.resolve(paths.srcPath, './views'),
-            '@static': path.resolve(paths.srcPath, './static')
+            'XHR': path.resolve(paths.root, './common', 'XHR'), // 公共xhr入口
+            'ASSETS': path.resolve(paths.root, './common', 'assets'), // 公共资源文件
+            'COMPONENTS': path.resolve(paths.root, './COMMON', 'components'), // 公共组件库
+            'STATIC': path.resolve(paths.root, './static'), // 公共静态资源
+            '@': paths.srcPath, // 子项目根目录
+            '@assets': path.resolve(paths.srcPath, './assets'), // 子项目资源文件
+            '@services': path.resolve(paths.srcPath, './services'), // 子项目接口api库
+            '@lang': path.resolve(paths.srcPath, './lang'), // 子项目语言包
+            '@constant': path.resolve(paths.srcPath, './constant'), // 子项目常量
+            '@components': path.resolve(paths.srcPath, './components'), // 子项目组件库
+            '@views': path.resolve(paths.srcPath, './views'), // 子项目页面
+            '@static': path.resolve(paths.srcPath, './static'), // 子项目静态资源
+            '@mixins': path.resolve(paths.srcPath, 'mixins'), // 子项目混合器
         }
     },
     optimization: env === 'production' ? {

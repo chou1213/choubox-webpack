@@ -1,3 +1,3 @@
 module.exports = {
-    'filename': 'dayanweb'
+    'filename': 'choubox-ui'
 };
