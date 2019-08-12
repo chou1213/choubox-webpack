@@ -112,7 +112,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules(?![\\/].*bigoapi[\\/])/, // 不检测的文件
+                exclude: /node_modules(?![\\/].*choubox[\\/])/, // 不检测的文件
                 use: {
                     loader: 'babel-loader'
                 }
